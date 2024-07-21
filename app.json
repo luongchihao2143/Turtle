@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/icon-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.hao.luong.commerce"
@@ -26,10 +26,26 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./src/assets/images/favicon.png"
+      "favicon": "./src/assets/images/icon-logo.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Montserrat-Black.ttf",
+            "./src/assets/fonts/Montserrat-Bold.ttf",
+            "./src/assets/fonts/Montserrat-ExtraLight.ttf",
+            "./src/assets/fonts/Montserrat-ExtraBold.ttf",
+            "./src/assets/fonts/Montserrat-Light.ttf",
+            "./src/assets/fonts/Montserrat-Medium.ttf",
+            "./src/assets/fonts/Montserrat-Regular.ttf",
+            "./src/assets/fonts/Montserrat-Thin.ttf",
+            "./src/assets/fonts/Montserrat-SemiBold.ttf",
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
