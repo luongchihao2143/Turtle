@@ -1,6 +1,5 @@
-import { View, Text } from "react-native";
 import React from "react";
-import { colors } from "@/constants/colors";
+import { View } from "react-native";
 
 export interface SpaceProps {
   direction?: "horizontal" | "vertical";
@@ -11,9 +10,8 @@ const Space = ({ direction = "horizontal", size }: SpaceProps) => {
   return (
     <View
       style={{
-        width: direction === "vertical" ? size : "100%",
-        height: direction === "vertical" ? "100%" : size,
-        backgroundColor: colors.primaryText,
+        width: direction === "vertical" ? size : undefined,
+        height: direction === "vertical" ? undefined : size,
       }}
     />
   );

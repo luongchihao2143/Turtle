@@ -20,6 +20,7 @@ interface CustomTextProps extends TextProps {
   text?: string;
   color?: ColorValue;
   fontSize?: number;
+  textAlign?: "auto" | "left" | "right" | "center" | "justify";
 }
 
 const CustomText = (props: CustomTextProps) => {
@@ -31,6 +32,7 @@ const CustomText = (props: CustomTextProps) => {
     text,
     children,
     style,
+    textAlign,
   } = props;
 
   const fontFamily = `${fontName}-${fontWeightProps}`;
@@ -43,6 +45,7 @@ const CustomText = (props: CustomTextProps) => {
           fontFamily,
           color,
           fontSize,
+          textAlign,
         },
         style,
       ]}>

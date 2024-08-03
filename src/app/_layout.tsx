@@ -3,11 +3,18 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { MMKVLoader } from "react-native-mmkv-storage";
+
+if (__DEV__) {
+  require("../../ReactotronConfig");
+}
 
 export const unstable_settings = {
   // Ensure any route can link back to Home
   initialRouteName: "index",
 };
+
+export const MMKV = new MMKVLoader().initialize();
 
 const fonts = {
   "Montserrat-Black": require("../assets/fonts/Montserrat-Black.ttf"),

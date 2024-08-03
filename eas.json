@@ -1,0 +1,27 @@
+{
+  "cli": {
+    "version": ">= 10.2.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        // "withoutCredentials": true
+
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk",
+        "applicationArchivePath": "android/app/build/outputs/**/*.{apk,aab}"
+      }
+    },
+    "production": {
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
