@@ -1,18 +1,18 @@
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { MMKVLoader } from "react-native-mmkv-storage";
-import { Provider } from "react-redux";
 import { store } from "@/redux/store";
+import { Provider } from "react-redux";
+import { MMKV } from "react-native-mmkv";
 
 export const unstable_settings = {
   // Ensure any route can link back to Home
   initialRouteName: "index",
 };
 
-export const MMKV = new MMKVLoader().initialize();
+export const storage = new MMKV();
 
 const fonts = {
   "Montserrat-Black": require("../assets/fonts/Montserrat-Black.ttf"),

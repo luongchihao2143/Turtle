@@ -1,26 +1,23 @@
-import { useAppSelector } from "@/redux/hooks";
+import { STORAGE_KEY } from "@/constants/asyncStorage";
 import { Redirect } from "expo-router";
-import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { storage } from "./_layout";
 
 export default function Index() {
-  const isFinishedOnBoarding = useAppSelector(
-    (selector) => selector.app.isFinishedOnboarding,
-  );
+  const [isWelcome, setIsWelcome] = useState(true);
+
+  const checkIsWelcome = useCallback(async () => {
+    const isFinishedOnboarding =
+      storage.getBoolean(STORAGE_KEY.FINISHED_ON_BOARDING) || false;
+    setIsWelcome(!isFinishedOnboarding);
+  }, []);
 
   useEffect(() => {
-    console.log("isFinishedOnBoarding: ", isFinishedOnBoarding);
-  }, [isFinishedOnBoarding]);
+    checkIsWelcome();
+  }, [checkIsWelcome]);
 
-  if (!isFinishedOnBoarding) {
+  if (isWelcome) {
     return <Redirect href={"/welcome"} />;
   }
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}>
-      <Text>hello</Text>
-    </View>
-  );
+  return <Redirect href={"/home"} />;
 }

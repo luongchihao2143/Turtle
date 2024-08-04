@@ -1,3 +1,5 @@
+// TODO: Remove later
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AppState {

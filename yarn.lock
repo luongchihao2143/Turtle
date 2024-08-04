@@ -7601,10 +7601,10 @@ react-native-helmet-async@2.0.4:
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
 
-react-native-mmkv-storage@^0.10.2:
-  version "0.10.2"
-  resolved "https://nexus.main99.com/repository/group-npm/react-native-mmkv-storage/-/react-native-mmkv-storage-0.10.2.tgz#976fff2f706a98479912e4e2e8a7e65ee921215e"
-  integrity sha512-rdxfbZ/YTWn35n8P0c9V8S8BciC5pllcs4egXvH3ER3tYMwvbCTrob0uXumMTpL4kkJcCh3aokHFQw60Ya4oHw==
+react-native-mmkv@^2.12.2:
+  version "2.12.2"
+  resolved "https://nexus.main99.com/repository/group-npm/react-native-mmkv/-/react-native-mmkv-2.12.2.tgz#4bba0f5f04e2cf222494cce3a9794ba6a4894dee"
+  integrity sha512-6058Aq0p57chPrUutLGe9fYoiDVDNMU2PKV+lLFUJ3GhoHvUrLdsS1PDSCLr00yqzL4WJQ7TTzH+V8cpyrNcfg==
 
 react-native-reanimated@~3.10.1:
   version "3.10.1"
@@ -7745,6 +7745,11 @@ reactotron-core-contract@0.2.3:
   version "0.2.3"
   resolved "https://nexus.main99.com/repository/group-npm/reactotron-core-contract/-/reactotron-core-contract-0.2.3.tgz#4b72bbe2905fda2a7e69f2653fc32bbdaaebb052"
   integrity sha512-GMeulATwiTsAqRnTKLWgM4gG3pUxAuspW412SWutHIW0fZNEOiHg8bWTEQURhm1WZj+u4tmdbkPiIWBfH8fvvQ==
+
+reactotron-react-native-mmkv@^0.2.6:
+  version "0.2.6"
+  resolved "https://nexus.main99.com/repository/group-npm/reactotron-react-native-mmkv/-/reactotron-react-native-mmkv-0.2.6.tgz#38bce6691125312f0335d3735f9af08d98196889"
+  integrity sha512-8q2iTXZqgfv5maHUQ1BdMVPYV1KbcltkZy+cKl8CpJ8IBHEs5cSbkPJnRfB30dmgR6asB0i/GOwsV2rUj5HrVg==
 
 reactotron-react-native@^5.1.7:
   version "5.1.7"

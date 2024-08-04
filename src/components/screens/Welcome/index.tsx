@@ -1,10 +1,10 @@
+import { storage } from "@/app/_layout";
 import CustomText, { FONT_WEIGHT } from "@/components/CustomText";
 import Space from "@/components/Space";
+import { STORAGE_KEY } from "@/constants/asyncStorage";
 import { colors } from "@/constants/colors";
 import { globalStyles } from "@/constants/globalStyles";
 import { IOnboarding, ON_BOARDING_DATA } from "@/constants/onBoarding";
-import { useAppDispatch } from "@/redux/hooks";
-import { setIsFinishedOnboarding } from "@/redux/reducer/appSlice";
 import { router } from "expo-router";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Image, Pressable, View } from "react-native";
@@ -14,14 +14,13 @@ import { styles } from "./styles";
 
 const Welcome = () => {
   const swiperRef = useRef<Swiper>(null);
-  const dispatch = useAppDispatch();
 
   const [step, setStep] = useState(0);
 
   const onPressFinish = useCallback(async () => {
-    dispatch(setIsFinishedOnboarding(true));
+    storage.set(STORAGE_KEY.FINISHED_ON_BOARDING, true);
     router.replace("/");
-  }, [dispatch]);
+  }, []);
 
   const onPressPrev = useCallback(() => {
     step > 0 && swiperRef.current && swiperRef.current?.scrollTo(step - 1);
