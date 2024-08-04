@@ -1,26 +1,18 @@
-import { STORAGE_KEY } from "@/constants/asyncStorage";
+import { useAppSelector } from "@/redux/hooks";
 import { Redirect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MMKV } from "./_layout";
 
 export default function Index() {
-  const [isWelcome, setIsWelcome] = useState(false);
-
-  const checkIsWelcome = useCallback(async () => {
-    const isFinishedOnBoarding = await MMKV.getBoolAsync(
-      STORAGE_KEY.FINISHED_ON_BOARDING,
-    );
-    console.log("isFinishedOnBoarding: ", isFinishedOnBoarding);
-
-    setIsWelcome(!isFinishedOnBoarding);
-  }, []);
+  const isFinishedOnBoarding = useAppSelector(
+    (selector) => selector.app.isFinishedOnboarding,
+  );
 
   useEffect(() => {
-    checkIsWelcome();
-  }, [checkIsWelcome]);
+    console.log("isFinishedOnBoarding: ", isFinishedOnBoarding);
+  }, [isFinishedOnBoarding]);
 
-  if (isWelcome) {
+  if (!isFinishedOnBoarding) {
     return <Redirect href={"/welcome"} />;
   }
   return (

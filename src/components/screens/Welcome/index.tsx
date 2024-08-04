@@ -1,10 +1,11 @@
-import { MMKV } from "@/app/_layout";
 import CustomText, { FONT_WEIGHT } from "@/components/CustomText";
 import Space from "@/components/Space";
-import { STORAGE_KEY } from "@/constants/asyncStorage";
 import { colors } from "@/constants/colors";
 import { globalStyles } from "@/constants/globalStyles";
 import { IOnboarding, ON_BOARDING_DATA } from "@/constants/onBoarding";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsFinishedOnboarding } from "@/redux/reducer/appSlice";
+import { router } from "expo-router";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Image, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,22 +14,26 @@ import { styles } from "./styles";
 
 const Welcome = () => {
   const swiperRef = useRef<Swiper>(null);
+  const dispatch = useAppDispatch();
 
   const [step, setStep] = useState(0);
+
+  const onPressFinish = useCallback(async () => {
+    dispatch(setIsFinishedOnboarding(true));
+    router.replace("/");
+  }, [dispatch]);
 
   const onPressPrev = useCallback(() => {
     step > 0 && swiperRef.current && swiperRef.current?.scrollTo(step - 1);
   }, [step]);
 
   const onPressNext = useCallback(() => {
-    step < ON_BOARDING_DATA.length &&
-      swiperRef.current &&
-      swiperRef.current?.scrollTo(step + 1);
-  }, [step]);
-
-  const onPressFinish = useCallback(async () => {
-    await MMKV.setBoolAsync(STORAGE_KEY.FINISHED_ON_BOARDING, true);
-  }, []);
+    if (step < ON_BOARDING_DATA.length - 1) {
+      swiperRef.current && swiperRef.current?.scrollTo(step + 1);
+    } else {
+      onPressFinish();
+    }
+  }, [onPressFinish, step]);
 
   const _renderContentByStep = useCallback(
     (onBoardingByStep: IOnboarding, index: number) => {
@@ -127,19 +132,12 @@ const Welcome = () => {
             />
           ))}
         </View>
-        <Pressable
-          disabled={step >= ON_BOARDING_DATA.length - 1}
-          onPress={onPressNext}>
+        <Pressable onPress={onPressNext}>
           <CustomText
-            text="Next"
+            text={step >= ON_BOARDING_DATA.length - 1 ? "Get Started" : "Next"}
             fontSize={18}
             fontWeight={FONT_WEIGHT.SEMI_BOLD}
             color={colors.primary}
-            style={[
-              {
-                opacity: step >= ON_BOARDING_DATA.length - 1 ? 0 : 1,
-              },
-            ]}
           />
         </Pressable>
       </View>

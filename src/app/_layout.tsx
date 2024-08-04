@@ -4,10 +4,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { MMKVLoader } from "react-native-mmkv-storage";
-
-if (__DEV__) {
-  require("../../ReactotronConfig");
-}
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 
 export const unstable_settings = {
   // Ensure any route can link back to Home
@@ -45,13 +43,15 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="index" />
-      </Stack>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="index" />
+        </Stack>
+      </SafeAreaProvider>
+    </Provider>
   );
 }
