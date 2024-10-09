@@ -6,6 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { MMKV } from "react-native-mmkv";
+import React from "react";
 
 export const unstable_settings = {
   // Ensure any route can link back to Home

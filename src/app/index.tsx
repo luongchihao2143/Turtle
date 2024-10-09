@@ -2,6 +2,8 @@ import { STORAGE_KEY } from "@/constants/asyncStorage";
 import { Redirect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { storage } from "./_layout";
+import React from "react";
+import { setStatusBarStyle } from "expo-status-bar";
 
 export default function Index() {
   const [isWelcome, setIsWelcome] = useState(true);
@@ -16,8 +18,12 @@ export default function Index() {
     checkIsWelcome();
   }, [checkIsWelcome]);
 
+  useEffect(() => {
+    setStatusBarStyle("dark");
+  }, []);
+
   if (isWelcome) {
     return <Redirect href={"/welcome"} />;
   }
-  return <Redirect href={"/home"} />;
+  return <Redirect href={"/sign-in"} />;
 }
