@@ -1,11 +1,203 @@
-import { View, Text } from "react-native";
-import React from "react";
+import CustomInput from "@/components/CustomInput";
+import CustomText, { FONT_WEIGHT } from "@/components/CustomText";
+import Space from "@/components/Space";
+import { colors } from "@/constants/colors";
+import { Ionicons } from "@expo/vector-icons";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Pressable, View, Image, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as yup from "yup";
+import { GOOGLE, APPLE, FACEBOOK } from "@/constants/images";
+import { Link, router } from "expo-router";
+import auth from "@react-native-firebase/auth";
+import CustomButton from "@/components/CustomButton";
+import { Authentication } from "@/utils/authentication";
+
+type FormValues = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
+const schema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+  confirmPassword: yup
+    .string()
+    .required("Confirm password is required")
+    .oneOf([yup.ref("password"), ""], "Passwords must match"),
+});
 
 const SignUp = () => {
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+  });
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onSubmit = (data: FormValues) => {
+    setLoading(true);
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then((response) => {
+        if (response.user) {
+          Authentication.UpdateProfile(response.user);
+          Alert.alert("Success", "User created successfully");
+          router.replace("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Error", err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const _renderForm = () => {
+    return (
+      <View className="w-full justify-center items-center">
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { value, onChange } }) => (
+            <CustomInput
+              value={value}
+              onChangeText={onChange}
+              placeholder="Email"
+              placeholderTextColor={colors.inputText}
+              icon={<Ionicons name="mail" size={24} color={colors.inputText} />}
+              error={errors.email?.message}
+            />
+          )}
+        />
+        <Space size={30} direction="horizontal" />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { value, onChange } }) => (
+            <CustomInput
+              value={value}
+              onChangeText={onChange}
+              placeholder="Password"
+              placeholderTextColor={colors.inputText}
+              isPassword
+              error={errors.password?.message}
+            />
+          )}
+        />
+        <Space size={30} direction="horizontal" />
+        <Controller
+          control={control}
+          name="confirmPassword"
+          render={({ field: { value, onChange } }) => (
+            <CustomInput
+              value={value}
+              onChangeText={onChange}
+              placeholder="Confirm Password"
+              placeholderTextColor={colors.inputText}
+              isPassword
+              error={errors.confirmPassword?.message}
+            />
+          )}
+        />
+      </View>
+    );
+  };
+
+  const _renderFooter = () => {
+    return (
+      <View className="justify-center items-center">
+        <CustomText
+          text="- Or login with -"
+          fontSize={12}
+          fontWeight={FONT_WEIGHT.MEDIUM}
+          color="#575757"
+        />
+
+        <Space size={20} direction="horizontal" />
+
+        <View className="flex-row justify-center items-center gap-[10] ">
+          <Pressable className="rounded-full p-[16] bg-[#FCF3F6] border border-primary">
+            <Image source={GOOGLE} className="w-[24] h-[24]" />
+          </Pressable>
+          <Pressable className="rounded-full p-[16] bg-[#FCF3F6] border border-primary">
+            <Image source={APPLE} className="w-[24] h-[24]" />
+          </Pressable>
+          <Pressable className="rounded-full p-[16] bg-[#FCF3F6] border border-primary">
+            <Image source={FACEBOOK} className="w-[24] h-[24]" />
+          </Pressable>
+        </View>
+
+        <Space size={28} direction="horizontal" />
+        <View className="flex-row justify-center items-center">
+          <CustomText
+            color="#575757"
+            fontSize={14}
+            textAlign="center"
+            fontWeight={FONT_WEIGHT.REGULAR}
+            text="I Have An Account  "
+          />
+          <Link href="/sign-in">
+            <CustomText
+              color={colors.primary}
+              fontSize={14}
+              fontWeight={FONT_WEIGHT.REGULAR}
+              text="Sign In"
+              className="underline"
+            />
+          </Link>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <View>
-      <Text>SignUp</Text>
-    </View>
+    <SafeAreaView className="flex-1 px-[32] bg-white">
+      <CustomText
+        text={`Welcome \nback!`}
+        fontSize={36}
+        fontWeight={FONT_WEIGHT.BOLD}
+        className=""
+      />
+
+      <Space size={36} direction="horizontal" />
+
+      {_renderForm()}
+
+      <Space size={20} direction="horizontal" />
+
+      <CustomText
+        className="w-3/4"
+        fontSize={12}
+        fontWeight={FONT_WEIGHT.REGULAR}
+        color={colors.inputText}>
+        By clicking the <CustomText text="Register" color="#FF4B26" /> button,
+        you agree to the public offer
+      </CustomText>
+
+      <Space size={30} direction="horizontal" />
+
+      <CustomButton
+        title="Create Account"
+        onPress={handleSubmit(onSubmit)}
+        loading={loading}
+      />
+
+      <Space size={75} direction="horizontal" />
+
+      {_renderFooter()}
+    </SafeAreaView>
   );
 };
 

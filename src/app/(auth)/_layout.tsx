@@ -1,7 +1,13 @@
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import React from "react";
-
+import auth from "@react-native-firebase/auth";
 const AuthLayout = () => {
+  const currentUser = auth().currentUser;
+
+  if (currentUser && currentUser?.uid) {
+    return <Redirect href="/home" />;
+  }
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="sign-in" />

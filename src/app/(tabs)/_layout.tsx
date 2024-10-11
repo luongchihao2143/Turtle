@@ -1,10 +1,17 @@
 import { colors } from "@/constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Tabs } from "expo-router";
+import auth from "@react-native-firebase/auth";
+import { Redirect, Tabs } from "expo-router";
 import React from "react";
 import { Pressable, View } from "react-native";
 
 const TabsLayout = () => {
+  const user = auth().currentUser;
+
+  if (!user) {
+    return <Redirect href="/sign-in" />;
+  }
+
   return (
     <Tabs
       screenOptions={{

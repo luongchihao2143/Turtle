@@ -43,7 +43,7 @@ const CustomInput = (props: CustomInputProps) => {
           </View>
         )}
         <TextInput
-          secureTextEntry={isPassword}
+          secureTextEntry={isPassword && !isPasswordVisible}
           className={`text-inputText py-[20] flex-1 ${inputClasses}`}
           {...inputProps}
         />

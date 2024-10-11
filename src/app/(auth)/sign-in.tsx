@@ -4,13 +4,16 @@ import Space from "@/components/Space";
 import { colors } from "@/constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Pressable, View, Image } from "react-native";
+import { Pressable, View, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as yup from "yup";
 import { GOOGLE, APPLE, FACEBOOK } from "@/constants/images";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import auth from "@react-native-firebase/auth";
+import CustomButton from "@/components/CustomButton";
+import { Authentication } from "@/utils/authentication";
 
 type FormValues = {
   email: string;
@@ -34,8 +37,26 @@ const SignIn = () => {
     resolver: yupResolver(schema),
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    setLoading(true);
+    auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then(async (response) => {
+        if (response.user) {
+          await Authentication.UpdateProfile(response.user);
+          Alert.alert("Success", "User signed in successfully");
+          router.replace("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Error", err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleForgotPassword = () => {
@@ -109,7 +130,7 @@ const SignIn = () => {
             fontSize={14}
             textAlign="center"
             fontWeight={FONT_WEIGHT.REGULAR}
-            text="Create An Account "
+            text="Create An Account  "
           />
           <Link href="/sign-up">
             <CustomText
@@ -150,16 +171,11 @@ const SignIn = () => {
 
       <Space size={30} direction="horizontal" />
 
-      <Pressable
-        className="w-full bg-primary py-[20] rounded-[10px] items-center justify-center"
-        onPress={handleSubmit(onSubmit)}>
-        <CustomText
-          text="Login"
-          fontSize={20}
-          fontWeight={FONT_WEIGHT.SEMI_BOLD}
-          color={colors.white}
-        />
-      </Pressable>
+      <CustomButton
+        title="Login"
+        onPress={handleSubmit(onSubmit)}
+        loading={loading}
+      />
 
       <Space size={75} direction="horizontal" />
 

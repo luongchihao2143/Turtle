@@ -14,14 +14,16 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.hao.luong.commerce"
+      "bundleIdentifier": "com.hao.luong.commerce",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/icon-logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.hao.luong.commerce"
+      "package": "com.hao.luong.commerce",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -42,10 +44,21 @@
             "./src/assets/fonts/Montserrat-Medium.ttf",
             "./src/assets/fonts/Montserrat-Regular.ttf",
             "./src/assets/fonts/Montserrat-Thin.ttf",
-            "./src/assets/fonts/Montserrat-SemiBold.ttf",
+            "./src/assets/fonts/Montserrat-SemiBold.ttf"
           ]
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true
