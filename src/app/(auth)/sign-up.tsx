@@ -1,19 +1,19 @@
+import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import CustomText, { FONT_WEIGHT } from "@/components/CustomText";
 import Space from "@/components/Space";
+import ThirdSignInMethods from "@/components/ThirdSignInMethods";
 import { colors } from "@/constants/colors";
+import { Authentication } from "@/utils/authentication";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
+import auth from "@react-native-firebase/auth";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Pressable, View, Image, Alert } from "react-native";
+import { Alert, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as yup from "yup";
-import { GOOGLE, APPLE, FACEBOOK } from "@/constants/images";
-import { Link, router } from "expo-router";
-import auth from "@react-native-firebase/auth";
-import CustomButton from "@/components/CustomButton";
-import { Authentication } from "@/utils/authentication";
 
 type FormValues = {
   email: string;
@@ -118,26 +118,7 @@ const SignUp = () => {
   const _renderFooter = () => {
     return (
       <View className="justify-center items-center">
-        <CustomText
-          text="- Or login with -"
-          fontSize={12}
-          fontWeight={FONT_WEIGHT.MEDIUM}
-          color="#575757"
-        />
-
-        <Space size={20} direction="horizontal" />
-
-        <View className="flex-row justify-center items-center gap-[10] ">
-          <Pressable className="rounded-full p-[16] bg-[#FCF3F6] border border-primary">
-            <Image source={GOOGLE} className="w-[24] h-[24]" />
-          </Pressable>
-          <Pressable className="rounded-full p-[16] bg-[#FCF3F6] border border-primary">
-            <Image source={APPLE} className="w-[24] h-[24]" />
-          </Pressable>
-          <Pressable className="rounded-full p-[16] bg-[#FCF3F6] border border-primary">
-            <Image source={FACEBOOK} className="w-[24] h-[24]" />
-          </Pressable>
-        </View>
+        <ThirdSignInMethods />
 
         <Space size={28} direction="horizontal" />
         <View className="flex-row justify-center items-center">

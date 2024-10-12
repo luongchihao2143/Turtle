@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import appReducer from "./reducer/appSlice";
+import authReducer from "./reducer/authSlice";
 import reactotron from "../../ReactotronConfig";
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
+    auth: authReducer,
   },
   enhancers: (getDefaultEnhancers) =>
     getDefaultEnhancers().concat(__DEV__ ? [reactotron.createEnhancer!()] : []),

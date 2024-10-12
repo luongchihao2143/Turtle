@@ -6,6 +6,6 @@ export const colors = {
   inputBackground: "#F3F3F3",
   inputText: "#676767",
   inputBorder: "#A8A8A9",
-  errorText: " #ff0000",
+  errorText: "#ff0000",
   black: "#000",
 };
