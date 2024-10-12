@@ -1,10 +1,10 @@
+import { useAppSelector } from "@/redux/hooks";
 import { Redirect, Stack } from "expo-router";
 import React from "react";
-import auth from "@react-native-firebase/auth";
 const AuthLayout = () => {
-  const currentUser = auth().currentUser;
+  const authState = useAppSelector((state) => state.auth);
 
-  if (currentUser && currentUser?.uid) {
+  if (authState.isLoggedIn) {
     return <Redirect href="/home" />;
   }
 

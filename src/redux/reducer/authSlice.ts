@@ -1,22 +1,38 @@
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface AuthState extends FirebaseAuthTypes.User {}
+export interface User {
+  displayName?: string;
+  email: string;
+  photoURL?: string;
+  uid: string;
+  emailVerified?: boolean;
+  creationTime?: string;
+  lastSignInTime?: string;
+}
 
-const initialState: AuthState = {} as AuthState;
+interface AuthState {
+  user?: User;
+  isLoggedIn: boolean;
+}
+
+const initialState: AuthState = {
+  isLoggedIn: false,
+};
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    saveUser: (state, action: PayloadAction<AuthState>) => {
-      state = action.payload;
+    saveUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.isLoggedIn = !!action.payload.uid;
     },
     removeUser: (state) => {
-      state = initialState;
+      state.user = undefined;
+      state.isLoggedIn = false;
     },
   },
 });
 
-export const { saveUser } = authSlice.actions;
+export const { saveUser, removeUser } = authSlice.actions;
 export default authSlice.reducer;

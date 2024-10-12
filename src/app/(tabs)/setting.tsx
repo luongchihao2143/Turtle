@@ -1,14 +1,12 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import auth from "@react-native-firebase/auth";
-import { router } from "expo-router";
+import { Authentication } from "@/utils/authentication";
+import React from "react";
+import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Setting = () => {
   const handleLogout = async () => {
-    await auth().signOut();
-    router.replace("/sign-in");
+    await Authentication.Logout();
   };
 
   return (

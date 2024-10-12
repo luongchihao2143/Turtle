@@ -8,7 +8,7 @@ import { Authentication } from "@/utils/authentication";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import auth from "@react-native-firebase/auth";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Pressable, View } from "react-native";
@@ -46,8 +46,6 @@ const SignIn = () => {
       .then(async (response) => {
         if (response.user) {
           await Authentication.UpdateProfile(response.user);
-          Alert.alert("Success", "User signed in successfully");
-          router.replace("/home");
         }
       })
       .catch((err) => {

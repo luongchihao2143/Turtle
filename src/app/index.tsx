@@ -1,14 +1,16 @@
 import { STORAGE_KEY } from "@/constants/asyncStorage";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Redirect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
-import { storage } from "./_layout";
-import React from "react";
 import { setStatusBarStyle } from "expo-status-bar";
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import React, { useCallback, useEffect, useState } from "react";
+import { storage } from "./_layout";
+import { saveUser } from "@/redux/reducer/authSlice";
 
 export default function Index() {
+  const authState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
   const [isWelcome, setIsWelcome] = useState(true);
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const [initializing, setInitializing] = useState(true);
 
   const checkIsWelcome = useCallback(async () => {
@@ -17,32 +19,30 @@ export default function Index() {
     setIsWelcome(!isFinishedOnboarding);
   }, []);
 
-  const onAuthStateChanged = (userState: FirebaseAuthTypes.User | null) => {
-    setUser(userState);
+  const getInitialUser = useCallback(() => {
+    const user = storage.getString(STORAGE_KEY.USER);
+    if (user) {
+      dispatch(saveUser(JSON.parse(user)));
+    }
     setInitializing(false);
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     checkIsWelcome();
-  }, [checkIsWelcome]);
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+    getInitialUser();
+  }, [checkIsWelcome, getInitialUser]);
 
   useEffect(() => {
     setStatusBarStyle("dark");
   }, []);
 
-  if (initializing) {
-    return null;
-  }
-
   if (isWelcome) {
     return <Redirect href={"/welcome"} />;
   }
-  if (user?.email) {
+  if (initializing) {
+    return null;
+  }
+  if (authState.isLoggedIn) {
     return <Redirect href={"/home"} />;
   }
   return <Redirect href={"/sign-in"} />;

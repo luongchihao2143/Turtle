@@ -1,21 +1,18 @@
 import { APPLE, FACEBOOK, GOOGLE } from "@/constants/images";
 import { Authentication } from "@/utils/authentication";
+import { GOOGLE_WEB_CLIENT_ID } from "@env";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { useRouter } from "expo-router";
 import React from "react";
 import { Alert, Image, Pressable, View } from "react-native";
 import CustomText, { FONT_WEIGHT } from "./CustomText";
 import Space from "./Space";
-import { GOOGLE_WEB_CLIENT_ID } from "@env";
 
 GoogleSignin.configure({
   webClientId: GOOGLE_WEB_CLIENT_ID,
 });
 
 const ThirdSignInMethods = () => {
-  const router = useRouter();
-
   const handleSignInWithGoogle = async () => {
     GoogleSignin.signIn()
       .then(async (res) => {
@@ -25,8 +22,7 @@ const ThirdSignInMethods = () => {
           );
           const response = await auth().signInWithCredential(googleCredential);
           if (response.user) {
-            Authentication.UpdateProfile(response.user);
-            router.replace("/home");
+            await Authentication.UpdateProfile(response.user);
           }
         }
       })

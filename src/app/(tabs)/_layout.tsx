@@ -1,14 +1,14 @@
 import { colors } from "@/constants/colors";
+import { useAppSelector } from "@/redux/hooks";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import auth from "@react-native-firebase/auth";
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
 import { Pressable, View } from "react-native";
 
 const TabsLayout = () => {
-  const user = auth().currentUser;
+  const authState = useAppSelector((state) => state.auth);
 
-  if (!user) {
+  if (!authState.isLoggedIn) {
     return <Redirect href="/sign-in" />;
   }
 

@@ -8,7 +8,7 @@ import { Authentication } from "@/utils/authentication";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import auth from "@react-native-firebase/auth";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
@@ -44,15 +44,14 @@ const SignUp = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     setLoading(true);
     auth()
       .createUserWithEmailAndPassword(data.email, data.password)
-      .then((response) => {
+      .then(async (response) => {
         if (response.user) {
-          Authentication.UpdateProfile(response.user);
-          Alert.alert("Success", "User created successfully");
-          router.replace("/home");
+          const user = response.user;
+          await Authentication.UpdateProfile(user);
         }
       })
       .catch((err) => {
