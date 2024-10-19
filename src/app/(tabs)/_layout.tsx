@@ -3,7 +3,6 @@ import { useAppSelector } from "@/redux/hooks";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
-import { Pressable, View } from "react-native";
 
 const TabsLayout = () => {
   const authState = useAppSelector((state) => state.auth);
@@ -21,57 +20,39 @@ const TabsLayout = () => {
       }}>
       <Tabs.Screen
         options={{
-          title: "Home",
+          title: "Chat",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" color={color} size={size} />
+            <AntDesign name="message1" color={color} size={size} />
           ),
         }}
-        name="home"
+        name="chat"
       />
       <Tabs.Screen
         options={{
-          title: "Wishlist",
+          title: "Groups",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="hearto" color={color} size={size} />
+            <AntDesign name="team" color={color} size={size} />
           ),
         }}
-        name="wishlist"
+        name="groups"
       />
       <Tabs.Screen
         options={{
-          title: "Cart",
+          title: "More",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="shoppingcart" color={color} size={size} />
-          ),
-          tabBarButton: (props) => (
-            <View className="w-[56] h-[56]">
-              <Pressable
-                onPress={props.onPress}
-                className="absolute bottom-[12] bg-primary w-[56] h-[56] rounded-full items-center justify-center">
-                <AntDesign name="shoppingcart" color={colors.white} size={24} />
-              </Pressable>
-            </View>
+            <AntDesign name="ellipsis1" color={color} size={size} />
           ),
         }}
-        name="cart"
+        name="more"
       />
       <Tabs.Screen
         options={{
-          title: "Search",
+          title: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="search1" color={color} size={size} />
+            <AntDesign name="user" color={color} size={size} />
           ),
         }}
-        name="search"
-      />
-      <Tabs.Screen
-        options={{
-          title: "Setting",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="setting" color={color} size={size} />
-          ),
-        }}
-        name="setting"
+        name="profile"
       />
     </Tabs>
   );

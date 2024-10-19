@@ -4,7 +4,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Setting = () => {
+const More = () => {
   const handleLogout = async () => {
     await Authentication.Logout();
   };
@@ -19,4 +19,4 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default More;

@@ -11,17 +11,33 @@ import firestore from "@react-native-firebase/firestore";
 import { router } from "expo-router";
 
 export class Authentication {
+  static generateRandomUsername(length: number = 8): string {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+
+    return `user_${result}`;
+  }
+
   static UpdateProfile = async (user: FirebaseAuthTypes.User) => {
     try {
       const currentUser = auth().currentUser;
+      const displayName = user.displayName || this.generateRandomUsername();
 
       if (user && currentUser) {
-        await currentUser.updateProfile({ displayName: user.displayName });
+        await currentUser.updateProfile({
+          displayName,
+        });
       }
 
       const userData: UserType = {
-        displayName: user?.displayName || "",
-        email: user?.email || "",
+        displayName,
+        email: user.email || "",
         photoURL: user?.photoURL || "",
         uid: user.uid,
         emailVerified: user?.emailVerified,
@@ -32,7 +48,7 @@ export class Authentication {
       store.dispatch(saveUser(userData));
       storage.set(STORAGE_KEY.USER, JSON.stringify(userData));
       await firestore().collection("users").doc(user?.uid).set(userData);
-      router.replace("/home");
+      router.replace("/chat");
     } catch (error) {
       console.error("👊 -> Authentication -> UpdateProfile= -> error:", error);
     }

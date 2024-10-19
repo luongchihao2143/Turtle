@@ -5,7 +5,7 @@ const AuthLayout = () => {
   const authState = useAppSelector((state) => state.auth);
 
   if (authState.isLoggedIn) {
-    return <Redirect href="/home" />;
+    return <Redirect href="/" />;
   }
 
   return (

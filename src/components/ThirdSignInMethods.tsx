@@ -1,15 +1,15 @@
 import { APPLE, FACEBOOK, GOOGLE } from "@/constants/images";
 import { Authentication } from "@/utils/authentication";
-import { GOOGLE_WEB_CLIENT_ID } from "@env";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import Constants from "expo-constants";
 import React from "react";
 import { Alert, Image, Pressable, View } from "react-native";
 import CustomText, { FONT_WEIGHT } from "./CustomText";
 import Space from "./Space";
 
 GoogleSignin.configure({
-  webClientId: GOOGLE_WEB_CLIENT_ID,
+  webClientId: Constants.expoConfig?.extra?.GOOGLE_WEB_CLIENT_ID,
 });
 
 const ThirdSignInMethods = () => {
