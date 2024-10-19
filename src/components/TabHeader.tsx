@@ -1,24 +1,36 @@
-import { Image } from "expo-image";
-import { router } from "expo-router";
+import { colors } from "@/constants/colors";
+import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CustomText, { FONT_WEIGHT } from "./CustomText";
 
-const TabHeader = () => {
+interface TabHeaderProps {
+  title: string;
+}
+
+const TabHeader = ({ title }: TabHeaderProps) => {
   const { top } = useSafeAreaInsets();
-
-  const onBack = () => {
-    router.back();
-  };
 
   return (
     <View
-      style={{ paddingTop: top }}
-      className="w-full items-center justify-between flex-row bg-primary">
-      <Image
-        source={require("@/assets/images/logo.png")}
-        style={{ width: 100, height: 30 }}
+      style={{ paddingTop: top + 12 }}
+      className="w-full items-center justify-between flex-row bg-primary px-[24] pb-[28]">
+      <CustomText
+        text={title}
+        color={colors.white}
+        fontWeight={FONT_WEIGHT.BOLD}
+        fontSize={22}
       />
+
+      <View className="flex-1 items-center justify-end flex-row gap-x-[8]">
+        <Pressable>
+          <AntDesign name="search1" size={24} color="white" />
+        </Pressable>
+        <Pressable>
+          <AntDesign name="plus" size={24} color="white" />
+        </Pressable>
+      </View>
     </View>
   );
 };

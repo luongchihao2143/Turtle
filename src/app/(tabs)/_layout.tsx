@@ -38,21 +38,21 @@ const TabsLayout = () => {
       />
       <Tabs.Screen
         options={{
-          title: "More",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="ellipsis1" color={color} size={size} />
-          ),
-        }}
-        name="more"
-      />
-      <Tabs.Screen
-        options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" color={color} size={size} />
           ),
         }}
         name="profile"
+      />
+      <Tabs.Screen
+        options={{
+          title: "More",
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="ellipsis1" color={color} size={size} />
+          ),
+        }}
+        name="more"
       />
     </Tabs>
   );
