@@ -4,12 +4,7 @@ import React from "react";
 import { View } from "react-native";
 
 const Chat = () => {
-  return (
-    <View className="flex-1 bg-white">
-      <TabHeader title="Chat" />
-      <View className="flex-1 px-[24] w-full"></View>
-    </View>
-  );
+  return <View className="flex-1 px-[24] bg-white w-full"></View>;
 };
 
 export default Chat;

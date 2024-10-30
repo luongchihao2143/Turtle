@@ -1,12 +1,13 @@
+import { persistor, store } from "@/redux/store";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { store } from "@/redux/store";
-import { Provider } from "react-redux";
+import React, { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MMKV } from "react-native-mmkv";
-import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 export const unstable_settings = {
   // Ensure any route can link back to Home
@@ -44,15 +45,19 @@ export default function RootLayout() {
   }
 
   return (
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen name="index" />
-        </Stack>
-      </SafeAreaProvider>
-    </Provider>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <GestureHandlerRootView>
+          <SafeAreaProvider>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+              }}>
+              <Stack.Screen name="index" />
+            </Stack>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </Provider>
+    </PersistGate>
   );
 }

@@ -51,7 +51,7 @@ const SignUp = () => {
       .then(async (response) => {
         if (response.user) {
           const user = response.user;
-          await Authentication.UpdateProfile(user);
+          await Authentication.SaveProfile(user);
         }
       })
       .catch((err) => {

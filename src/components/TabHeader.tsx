@@ -23,7 +23,7 @@ const TabHeader = ({ title }: TabHeaderProps) => {
         fontSize={22}
       />
 
-      <View className="flex-1 items-center justify-end flex-row gap-x-[8]">
+      <View className="flex-1 items-center justify-end flex-row gap-x-[12]">
         <Pressable>
           <AntDesign name="search1" size={24} color="white" />
         </Pressable>

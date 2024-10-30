@@ -1,5 +1,5 @@
 import { colors } from "@/constants/colors";
-import { Entypo, Octicons } from "@expo/vector-icons";
+import { AntDesign, Entypo, Octicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { TextInput, TextInputProps, View } from "react-native";
 import CustomText, { FONT_WEIGHT } from "../CustomText";
@@ -10,6 +10,8 @@ interface CustomInputProps extends TextInputProps {
   icon?: React.ReactNode;
   isPassword?: boolean;
   error?: string;
+  isClearAllButton?: boolean;
+  label?: string;
 }
 
 const CustomInput = (props: CustomInputProps) => {
@@ -19,18 +21,33 @@ const CustomInput = (props: CustomInputProps) => {
     isPassword,
     icon,
     error,
+    isClearAllButton,
+    label,
+    onChangeText,
     ...inputProps
   } = props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const onClearInput = () => {
+    onChangeText && onChangeText("");
+  };
+
   return (
     <View className="w-full">
+      {label && (
+        <CustomText
+          color={colors.inputText}
+          text={label}
+          style={{ marginBottom: 4 }}
+          fontSize={14}
+          fontWeight={FONT_WEIGHT.REGULAR}
+        />
+      )}
       <View
         className={`
       w-full 
       px-[12]
-      bg-inputBackground
       rounded-[10px] 
       border-[1px] 
       border-inputBorder
@@ -43,6 +60,7 @@ const CustomInput = (props: CustomInputProps) => {
           </View>
         )}
         <TextInput
+          onChangeText={onChangeText}
           secureTextEntry={isPassword && !isPasswordVisible}
           className={`text-inputText py-[20] flex-1 ${inputClasses}`}
           {...inputProps}
@@ -54,6 +72,16 @@ const CustomInput = (props: CustomInputProps) => {
               size={24}
               color={colors.inputText}
               onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            />
+          </View>
+        )}
+        {!isPassword && isClearAllButton && inputProps?.value && (
+          <View className="mr-[4]">
+            <AntDesign
+              name={"close"}
+              size={16}
+              color={colors.inputText}
+              onPress={onClearInput}
             />
           </View>
         )}

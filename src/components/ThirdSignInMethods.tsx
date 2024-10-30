@@ -22,7 +22,7 @@ const ThirdSignInMethods = () => {
           );
           const response = await auth().signInWithCredential(googleCredential);
           if (response.user) {
-            await Authentication.UpdateProfile(response.user);
+            await Authentication.SaveProfile(response.user);
           }
         }
       })

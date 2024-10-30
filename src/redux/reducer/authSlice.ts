@@ -1,5 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export enum Gender {
+  MALE = "male",
+  FEMALE = "female",
+  OTHER = "other",
+  UNKNOWN = "unknown",
+}
+
+export const GenderName = {
+  [Gender.FEMALE]: "Female",
+  [Gender.MALE]: "Male",
+  [Gender.OTHER]: "Other",
+  [Gender.UNKNOWN]: "Unknown",
+};
+
 export interface User {
   displayName?: string;
   email: string;
@@ -8,6 +22,8 @@ export interface User {
   emailVerified?: boolean;
   creationTime?: string;
   lastSignInTime?: string;
+  gender?: Gender;
+  birthDate?: string;
 }
 
 interface AuthState {

@@ -45,7 +45,7 @@ const SignIn = () => {
       .signInWithEmailAndPassword(data.email, data.password)
       .then(async (response) => {
         if (response.user) {
-          await Authentication.UpdateProfile(response.user);
+          await Authentication.SaveProfile(response.user);
         }
       })
       .catch((err) => {

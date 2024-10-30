@@ -5,6 +5,7 @@ import GOOGLE from "../assets/images/google-logo.png";
 import APPLE from "../assets/images/apple-logo.png";
 import FACEBOOK from "../assets/images/fb-logo.png";
 import LOGO from "../assets/images/icon-logo.png";
+import AVATAR from "../assets/images/default_avatar.png";
 
 export {
   CHOOSE_PRODUCT,
@@ -14,4 +15,5 @@ export {
   APPLE,
   FACEBOOK,
   LOGO,
+  AVATAR,
 };

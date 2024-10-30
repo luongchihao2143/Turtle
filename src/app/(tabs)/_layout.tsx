@@ -1,3 +1,4 @@
+import TabHeader from "@/components/TabHeader";
 import { colors } from "@/constants/colors";
 import { useAppSelector } from "@/redux/hooks";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -24,6 +25,8 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="message1" color={color} size={size} />
           ),
+          headerShown: true,
+          header: () => <TabHeader title="Chat" />,
         }}
         name="chat"
       />
@@ -33,6 +36,8 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="team" color={color} size={size} />
           ),
+          headerShown: true,
+          header: () => <TabHeader title="Groups" />,
         }}
         name="groups"
       />
@@ -42,6 +47,8 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" color={color} size={size} />
           ),
+          headerShown: true,
+          header: () => <TabHeader title="Profile" />,
         }}
         name="profile"
       />
@@ -51,6 +58,8 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="ellipsis1" color={color} size={size} />
           ),
+          headerShown: true,
+          header: () => <TabHeader title="More" />,
         }}
         name="more"
       />
